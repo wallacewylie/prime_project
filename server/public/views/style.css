@@ -136,10 +136,6 @@ header h1 {
     100% {margin-left: -1000px;}
 }
 
-.button:active + img {
-    -webkit-transform: rotate(600deg);
-    -webkit-transition: -webkit-transform 2s ease-out;
-}
 
 .button {
     float: right;
@@ -148,13 +144,33 @@ header h1 {
 }
 
 
-#image-to-spin {
+
+.image-stationary {
     float: right;
-    transition: transform 3s ease-out;
-    margin: 25px 40px 0 120px;
+    margin: -385px 40px 0 120px;
     width: 225px;
     height: 225px;
 }
+
+.image-to-spin {
+    float: right;
+    margin: -385px 40px 0 120px;
+    width: 225px;
+    height: 225px;
+    -webkit-animation:spin 4s linear;
+    -moz-animation:spin 4s linear;
+    animation:spin 4s linear;
+}
+@-moz-keyframes spin { 0% { -moz-transform: rotate(1500deg); } 20% { -moz-transform: rotate(1000deg); }
+30% { -moz-transform: rotate(700deg); } 50% { -moz-transform: rotate(360deg); }}
+@-webkit-keyframes spin { 0% { -webkit-transform: rotate(1500deg); } 20% { -webkit-transform: rotate(1000deg); }
+30% { -webkit-transform: rotate(700deg); } 50% { -webkit-transform: rotate(360deg); }}
+@keyframes spin { 0% { -webkit-transform: rotate(1500deg); transform:rotate(2000deg); }
+20% { -webkit-transform: rotate(1000deg); transform:rotate(1000deg); }
+30% { -webkit-transform: rotate(700deg); transform:rotate(700deg); }
+50% { -webkit-transform: rotate(360deg); transform:rotate(360deg); }}
+
+
 
 .guide {
     margin: 10px 0 0 50px;
@@ -162,3 +178,17 @@ header h1 {
     height: 400px;
     float: left;
 }
+
+.searchbox {
+    float: left;
+    margin: -200px 100px 0 50px;
+    clear: both;
+}
+
+#search {
+    width: 150px;
+}
+
+
+
+

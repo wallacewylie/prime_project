@@ -22,7 +22,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     $locationProvider.html5Mode(true);
 }]);
 
-app.controller('MainController', ['$scope', function($scope){
+app.controller('MainController', ['$scope', '$http', function($scope, $http){
     $scope.intro = {
         question:'What is Realm of Dusk?',
         paragraph: "Realm of Dusk is a website that helps you approach music with the help of a trusty guide. " +
@@ -32,7 +32,44 @@ app.controller('MainController', ['$scope', function($scope){
     $scope.spin = {
         icon:"https://www.casinobum.com/files/includes/images/images-wheel1.png"
     };
+
+
+
+    $scope.getInfo = function() {
+        $http({
+            method: 'GET',
+            url: 'http://ws.audioscrobbler.com/2.0/' + '?' + 'method=artist.getinfo&' +
+            'artist=' + $scope.searchBox + '&' +
+            'api_key=d3547c51a237e9e26fcdba8e4d4a97ce&' +
+            'format=json'
+        }).then(function successCallback(response) {
+            console.log(response.data.artist.name);
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+    };
+
+    $scope.toSpin = false;
+
+    $scope.changeClass = function() {
+            if ($scope.toSpin === false) {
+                return "image-stationary";
+            } else {
+                return "image-to-spin";
+            }
+    };
+
+    $scope.myFunction = function() {
+        $scope.toSpin = true;
+    };
+
+
 }]);
+
+
+
+
 
 app.controller('SuccessController', ['$scope', function($scope){
 
@@ -51,3 +88,4 @@ app.controller('SuccessController', ['$scope', function($scope){
 app.controller('FailController', ['$scope', function($scope){
 
 }]);
+

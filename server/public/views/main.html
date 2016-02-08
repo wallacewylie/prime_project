@@ -3,8 +3,20 @@
     {{intro.paragraph}}
 </div>
 
-<img id="image-to-spin" ng-src="{{spin.icon}}">
-<button class="button" ng-click="myFunction()">Do You Take A Chance?</button>
+<div class="searchbox">
+<input id="search" ng-model="searchBox" type="text" placeholder="Looking for the real thing!">
+<input id="submit" type="submit" ng-click="getInfo(searchBox)" value="Searching">
+</div>
+
+<img ng-class="changeClass()" ng-model="wheel" ng-src="{{spin.icon}}">
+<input type="submit" class="button" value="Do You Take A Chance?" ng-click="myFunction()"/>
+
+
+
+
+
+
+
 
 
 
