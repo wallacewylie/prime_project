@@ -36,13 +36,11 @@ header h1 {
     border-radius: 200px;
     -moz-border-radius: 200px;
     -webkit-border-radius: 200px;
-
     position: relative;
 }
 
 .cloud:before, .cloud:after {
     content: '';
-    position: absolute;
     background: #fff;
     width: 100px; height: 80px;
     position: absolute; top: -15px; left: 10px;
@@ -189,6 +187,31 @@ header h1 {
     width: 150px;
 }
 
+.artistImage {
+    margin: 10px 0 0 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.artistName {
+    width: 300px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 35px;
+    font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+}
 
+.artistDescript {
+    width: 900px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Gravitas One';
+}
 
+.artistButton {
+    float: right;
+    margin: 5px 5px 0 0;
+}

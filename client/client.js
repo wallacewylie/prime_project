@@ -42,10 +42,13 @@ app.controller('MainController', ['$scope', '$http', 'artistService', '$location
             'api_key=d3547c51a237e9e26fcdba8e4d4a97ce&' +
             'format=json'
         }).then(function (response) {
-            var entry = response.data;
-            var artistImage = entry.artist.image[3]['#text'];
+            var artist = response.data;
+            console.log(response.data);
+            artist.image = artist.artist.image[3]['#text'];
+            console.log(artist);
+            artistService.setCurrentArtist(artist);
             $location.path('/artist');
-            artistService.setCurrentArtist(artistImage);
+
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
@@ -53,7 +56,7 @@ app.controller('MainController', ['$scope', '$http', 'artistService', '$location
     };
 
 
-
+//function to make sure the wheel doesn't spin until clicked
     $scope.toSpin = false;
 
     $scope.changeClass = function () {
@@ -66,7 +69,7 @@ app.controller('MainController', ['$scope', '$http', 'artistService', '$location
     };
 
 
-
+// function to pick random artist from my database
     randomArtist = function (array) {
         var x = Math.floor(Math.random() * (array.length - 1));
            var artist = array[x];
@@ -75,16 +78,21 @@ app.controller('MainController', ['$scope', '$http', 'artistService', '$location
     };
 
     $scope.myFunction = function() {
+        //spins the wheel
         $scope.toSpin = true;
-        console.log("click");
+        //function to delay while wheel spins
         setTimeout(function(){
+            //http call to database
         $http.get("/artist/grab").then(function(response){
-            console.log(response);
+            // artistArray is all of the artists in the database in an array
             var artistArray = response.data;
+            //the following returns a random artist from artist array
             return randomArtist(artistArray);
         })
+        //.then allows you to chain the previous function to the next one
+            // so artist refers to randomArtist(artistArray)
+        //the input of the next .then is the return value of the previous function
             .then (function (artist){
-                console.log(artist, "Hello");
                 $http({
                     method: 'GET',
                     url: 'http://ws.audioscrobbler.com/2.0/' + '?' + 'method=artist.getinfo&' +
@@ -94,7 +102,6 @@ app.controller('MainController', ['$scope', '$http', 'artistService', '$location
                 })
                     .then(function (response) {
                         var entry = response.data;
-                        console.log(response.data, "Howdy");
                        artist.image = entry.artist.image[3]['#text'];
                         artistService.setCurrentArtist(artist);
                         $location.path('/artist');
@@ -121,6 +128,9 @@ app.controller('FailController', ['$scope', function($scope){
 
 }]);
 
+// artistService is a factory that allows information to be shared between controllers
+// service is set to empty object, currentArtist is also empty
+// service.setCurrentArtist sets a method
 app.factory('artistService', ['$http', function($http) {
 
     var service = {};
@@ -139,20 +149,3 @@ app.factory('artistService', ['$http', function($http) {
 
 }]);
 
-app.factory('searchService', ['$http', function($http) {
-
-    var service = {};
-
-    var currentArtist = '';
-
-    service.setCurrentArtist = function(artist) {
-        currentArtist = artist;
-    };
-
-    service.getCurrentArtist = function() {
-        return currentArtist;
-    };
-
-    return service;
-
-}]);
