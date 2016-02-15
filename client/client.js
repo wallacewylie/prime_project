@@ -10,19 +10,20 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
             templateUrl: 'views/artist.html',
             controller: 'ArtistController'
         })
-        .when('/success', {
-            templateUrl: 'views/fail.html',
-            controller: 'SuccessController'
+        .when('/database', {
+            templateUrl: 'views/database.html',
+            controller: 'DatabaseController'
         })
         .when('/fail', {
-            templateUrl: 'views/register.html',
+            templateUrl: 'views/fail.html',
             controller: 'FailController'
         });
 
     $locationProvider.html5Mode(true);
 }]);
 
-app.controller('MainController', ['$scope', '$http', 'artistService', '$location', function($scope, $http, artistService, $location) {
+app.controller('MainController', ['$scope', '$http', 'artistService', '$location',
+    function($scope, $http, artistService, $location) {
     $scope.intro = {
         question: 'What is Realm of Dusk?',
         paragraph: "Realm of Dusk is a website that helps you approach music with the help of a trusty guide. " +
@@ -43,12 +44,12 @@ app.controller('MainController', ['$scope', '$http', 'artistService', '$location
             'format=json'
         }).then(function (response) {
             var artist = response.data;
-            console.log(response.data);
+            console.log(artist, "looop");
             artist.image = artist.artist.image[3]['#text'];
-            console.log(artist);
+            console.log(artist, "Yo");
             artistService.setCurrentArtist(artist);
-            $location.path('/artist');
-
+            artist.name = artist.artist.name;
+            $location.path('/database');
         }, function errorCallback(response) {
             // called asynchronously if an error occurs
             // or server returns response with an error status.
@@ -110,21 +111,75 @@ app.controller('MainController', ['$scope', '$http', 'artistService', '$location
                         // or server returns response with an error status.
                     })
             });
-        }, 4100);
+        }, 4010);
     };
 
 }]);
 
 
-app.controller('ArtistController', ['$scope', 'artistService', function($scope, artistService){
+app.controller('ArtistController', ['$scope', 'artistService', '$location', function($scope, artistService, location){
     $scope.artistToShow = artistService.getCurrentArtist();
 }]);
 
-app.controller('SuccessController', ['$scope', function($scope){
+app.controller('DatabaseController', ['$scope', '$http', 'artistService', '$location',
+    function($scope, $http, artistService, $location){
+    $scope.artistToShow = artistService.getCurrentArtist();
+    $scope.data = {
+        welcome: "Look! It's a picture of " + $scope.artistToShow.name +". Time for the next step. " +
+    "You must click the button to find the Realm Of Dusk judgement, or return home. Make the call!"
+    };
 
+
+        chosenArtist = function (array) {
+            for(var i = 0; i < array.length; i++){
+                if($scope.artistToShow.name = array[i]){
+                    console.log($scope.artistToShow.name, "Wallace");
+                    console.log(array[i].descript, "Abbey");
+                    return array[i];
+                }
+            }
+            var artist = array[i];
+            console.log(artist);
+            return artist;
+        };
+
+    $scope.artistFunction = function(){
+        $http.get('/artist/grab').then(function(response) {
+            var mongoArray = response.data;
+            console.log(mongoArray, "All");
+            return chosenArtist(mongoArray);
+        //}).then(function(artist) {
+        //    //for(i = 0; i < mongoArray.length; i++){
+        //    console.log(artist, "hfhfhfhf");
+        //    artistService.setCurrentArtist(artist);
+        }).then (function (artist){
+            $http({
+                method: 'GET',
+                url: 'http://ws.audioscrobbler.com/2.0/' + '?' + 'method=artist.getinfo&' +
+                'artist=' + artist.name + '&' +
+                'api_key=d3547c51a237e9e26fcdba8e4d4a97ce&' +
+                'format=json'
+            })
+                .then(function (response) {
+                    var entry = response.data;
+                    artist.image = entry.artist.image[3]['#text'];
+                    artistService.setCurrentArtist(artist);
+                    $location.path('/artist');
+        }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            $location.path('/fail');
+            $scope.artistToShow.name = $scope.noEntry;
+        })
+        });
+    };
 }]);
 
-app.controller('FailController', ['$scope', function($scope){
+app.controller('FailController', ['$scope', 'artistService', '$location', function($scope, artistService, $location){
+    $scope.noEntry = {
+        message: "We're really sorry, but Realm Of Dusk doesn't have a page on this artist yet." +
+        " Trust us, we have an opinion. Just be patient friend!"
+    };
 
 }]);
 
@@ -137,6 +192,7 @@ app.factory('artistService', ['$http', function($http) {
 
     var currentArtist = '';
 
+
     service.setCurrentArtist = function(artist) {
         currentArtist = artist;
     };
@@ -148,4 +204,3 @@ app.factory('artistService', ['$http', function($http) {
     return service;
 
 }]);
-

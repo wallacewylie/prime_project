@@ -43,6 +43,19 @@ app.get("/artist/grab", function(req,res){
     });
 });
 
+app.get("/artist/grab/name", function(req,res){
+    Artist.find({}, function(err, artists){
+        if(err){
+            console.log(err);
+        }
+        //res.send(artists);
+        console.log(artists);
+
+        res.send(artists);
+    });
+});
+
+
 
 var server = app.listen(port, function(){
     var port = server.address().port;
