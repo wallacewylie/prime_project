@@ -1,4 +1,5 @@
 var express = require("express");
+var router = express.Router();
 var app = express();
 var bodyParser = require("body-parser");
 var index = require("./routes/index");
@@ -34,7 +35,8 @@ var Artist = mongoose.model('Artist', artistSchema);
 app.get("/artist/grab", function(req,res){
     Artist.find({}, function(err, artists){
         if(err){
-            console.log(err);
+            response.sendStatus(401);
+            console.log(401);
         }
         //res.send(artists);
         console.log(artists.length);
@@ -42,19 +44,6 @@ app.get("/artist/grab", function(req,res){
         res.send(artists);
     });
 });
-
-app.get("/artist/grab/name", function(req,res){
-    Artist.find({}, function(err, artists){
-        if(err){
-            console.log(err);
-        }
-        //res.send(artists);
-        console.log(artists);
-
-        res.send(artists);
-    });
-});
-
 
 
 var server = app.listen(port, function(){

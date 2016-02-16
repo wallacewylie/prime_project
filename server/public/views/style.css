@@ -24,7 +24,6 @@ header h1 {
     padding: 120px 0 0 0;
     background: #c9dbe9;
     background: -webkit-linear-gradient(top, #000000 0%, #483D8B 100%);
-    background: -webkit-linear-gradient(top, #000000 0%, #483D8B 100%);
     background: -moz-linear-gradient(top, #000000 0%, #483D8B 100%);
 }
 
@@ -83,7 +82,7 @@ header h1 {
 }
 
 .x3 {
-    left: -250px; top: -200px;
+    left: 250px; top: -200px;
 
     -webkit-transform: scale(0.8);
     -moz-transform: scale(0.8);
@@ -109,7 +108,7 @@ header h1 {
 }
 
 .x5 {
-    left: -150px; top: -150px;
+    left: 150px; top: -150px;
 
     -webkit-transform: scale(0.8);
     -moz-transform: scale(0.8);
@@ -194,7 +193,7 @@ header h1 {
 }
 
 .artistName {
-    width: 300px;
+    width: 400px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -203,27 +202,26 @@ header h1 {
 }
 
 .artistDescript {
+    margin: 0 auto 20px auto;
     width: 900px;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
     font-family: 'Gravitas One';
 }
 
 .artistButton {
     float: right;
-    margin: 5px 5px 0 0;
+    margin: 5px 5px 0 5px;
     width: 200px;
 }
 
 .welcome {
-    margin: 10px 0 0 0;
+    margin: 10px 0 0 20px;
     width: 200px;
     font-family: 'Gravitas One';
 }
 
 .dataName {
-    width: 300px;
+    width: 400px;
     margin: 5px auto 0 auto;
     text-align: center;
     font-size: 35px;
@@ -231,6 +229,35 @@ header h1 {
 }
 
 .dataImage {
-    margin: -170px auto 10px auto;
+    margin: -230px auto 10px auto;
     display: block;
 }
+
+.dataIcon {
+    text-align: center;
+}
+
+.fail {
+    width: 500px;
+    margin: 10px auto 0 auto;
+    text-align: center;
+    font-family: 'Gravitas One';
+}
+
+.patience {
+    margin: 0 auto 10px auto;
+    display: block;
+}
+
+.none {
+    width: 500px;
+    margin: 10px auto 0 auto;
+    text-align: center;
+    font-family: 'Gravitas One';
+}
+
+.tryagain {
+    margin: 0 auto 10px auto;
+    display: block;
+}
+
