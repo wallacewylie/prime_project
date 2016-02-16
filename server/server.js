@@ -15,9 +15,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/', index);
 
+var options = {
+    user: "wallace.wylie@gmail.com",
+    pass: "Beatles65"
+}
+
 //DB STUFF
-var mongoURI = "mongodb://wallace.wylie@gmail.com:Beatles65@ds011248.mongolab.com:11248/artists";
-var MongoDB = mongoose.connect(mongoURI).connection;
+var mongoURI = "mongodb://ds011248.mongolab.com:11248/artists";
+var MongoDB = mongoose.connect(mongoURI, options).connection;
 
 MongoDB.once('open', function(){
     console.log("Mongo is connected!");
