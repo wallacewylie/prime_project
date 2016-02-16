@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', index);
 
 //DB STUFF
-var mongoURI = "mongodb://localhost:27017/artists";
+var mongoURI = "mongodb://wallace.wylie@gmail.com:Beatles65@ds011248.mongolab.com:11248/artists";
 var MongoDB = mongoose.connect(mongoURI).connection;
 
 MongoDB.once('open', function(){
